@@ -30,6 +30,9 @@ COPY . /var/www
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Create .env file from example
+RUN cp .env.example .env
+
 # Set permissions
 RUN chmod -R 755 /var/www/storage \
     && chmod -R 755 /var/www/bootstrap/cache

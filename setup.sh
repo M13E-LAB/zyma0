@@ -5,7 +5,7 @@ if [ ! -f .env ]; then
     cp .env.example .env
 fi
 
-# Generate application key if not set
+# Set APP_KEY in .env if not already set
 if ! grep -q "APP_KEY=base64:" .env; then
     php artisan key:generate --force
 fi
@@ -18,5 +18,9 @@ fi
 # Run migrations
 php artisan migrate --force
 
-# Start the application
-php artisan serve --host=0.0.0.0 --port=${PORT:-8000} 
+# Cache config for better performance
+php artisan config:cache
+
+# Start the application with proper error handling
+echo "Starting Laravel on port ${PORT:-8000}"
+exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000} 

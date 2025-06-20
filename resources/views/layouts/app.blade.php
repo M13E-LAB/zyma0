@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,6 +71,29 @@
             <a class="navbar-brand" href="{{ route('products.search') }}">
                 ZYMA
             </a>
+            
+            <div class="navbar-nav ms-auto">
+                @auth
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            👋 {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
+                                        🚪 Se déconnecter
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <a class="nav-link" href="{{ route('login') }}">🔑 Connexion</a>
+                    <a class="nav-link" href="{{ route('register') }}">🚀 S'inscrire</a>
+                @endauth
+            </div>
         </div>
     </nav>
 
